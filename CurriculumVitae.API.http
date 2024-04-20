@@ -1,6 +1,6 @@
 @CurriculumVitae.API_HostAddress = http://localhost:5116
 
-GET {{CurriculumVitae.API_HostAddress}}/weatherforecast/
+GET {{CurriculumVitae.API_HostAddress}}/curriculumvitae/
 Accept: application/json
 
 ###
