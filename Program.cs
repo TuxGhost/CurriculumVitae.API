@@ -1,5 +1,7 @@
 
 using CurriculumVitae.common.Services;
+using CurriculumVitae.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CurriculumVitae.API
 {
@@ -9,7 +11,10 @@ namespace CurriculumVitae.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            // Add services to the container.            
+            builder.Services.AddDbContext<CVDbContext>(options =>                
+                options.UseSqlite(builder.Configuration?.GetConnectionString("Default")));
+
             builder.Services.AddScoped<ICurriculumVitaeServices,CurriculumVitaeServices>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
