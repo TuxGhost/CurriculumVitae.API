@@ -3,6 +3,7 @@ using CurriculumVitaeRepository.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http.HttpResults;
+using System.Data.Common;
 
 namespace CurriculumVitae.API.Controllers;
 
@@ -15,9 +16,9 @@ public class CurriculumVitaeController : ControllerBase
     {
         this.cvService = cvService;
     }
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<Results<Ok<IEnumerable<Profiel>>, BadRequest<string>>> GetAllProfiles()
-    {        
+    {
         try
         {
             var data = await cvService.GetAllProfiles();
@@ -26,9 +27,12 @@ public class CurriculumVitaeController : ControllerBase
                 return TypedResults.BadRequest("Null pointer");
             }
             return TypedResults.Ok(data);
+        } catch(DbException ex)
+        {
+            return TypedResults.BadRequest($"Problem with database: {ex.Message}");        
         } catch(Exception ex)
         {
-            return TypedResults.BadRequest("Could not execute internal code");
+            return TypedResults.BadRequest(ex.Message);
         } finally
         {
             

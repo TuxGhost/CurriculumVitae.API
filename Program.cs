@@ -12,6 +12,9 @@ namespace CurriculumVitae.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.            
+            Console.WriteLine("Starting API");
+            string connectionString = builder.Configuration?.GetConnectionString("Default")!;
+            Console.WriteLine($"Connectionstring : {connectionString}");
             builder.Services.AddDbContext<CVDbContext>(options =>                
                 options.UseSqlite(builder.Configuration?.GetConnectionString("Default")));
 
